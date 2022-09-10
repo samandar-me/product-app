@@ -17,6 +17,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sdk.cleanarchwithjetpackcompose.presentation.component.Screen
+import com.sdk.cleanarchwithjetpackcompose.presentation.create.CreateScreen
+import com.sdk.cleanarchwithjetpackcompose.presentation.detail.DetailScreen
 import com.sdk.cleanarchwithjetpackcompose.presentation.login.LoginScreen
 import com.sdk.cleanarchwithjetpackcompose.presentation.register.RegisterScreen
 import com.sdk.cleanarchwithjetpackcompose.presentation.splash.SplashScreen
@@ -49,6 +51,12 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = Screen.MainScreen.route) {
                             MainScreen(navController = navController)
+                        }
+                        composable(route = Screen.CreateScreen.route) {
+                            CreateScreen(navController = navController)
+                        }
+                        composable(route = Screen.DetailScreen.route) {
+                            DetailScreen(navController = navController)
                         }
                     }
                 }

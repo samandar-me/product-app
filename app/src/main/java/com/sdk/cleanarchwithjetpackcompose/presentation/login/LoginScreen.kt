@@ -135,8 +135,10 @@ fun LoginScreen(
                     is LoginState.Error -> context.toast(state.rawRes.message)
                     is LoginState.ShowToast -> context.toast(state.message)
                     is LoginState.Success -> {
-                        viewModel.saveToken(state.loginEntity.token)
-                        navController.navigate(Screen.MainScreen.route)
+                        LaunchedEffect(key1 = true) {
+                            viewModel.saveToken(state.loginEntity.token)
+                            navController.navigate(Screen.MainScreen.route)
+                        }
                     }
                 }
             }

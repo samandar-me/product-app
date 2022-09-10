@@ -7,10 +7,7 @@ import com.sdk.cleanarchwithjetpackcompose.domain.login.use_case.LoginUseCase
 import com.sdk.cleanarchwithjetpackcompose.manager.SharedPrefManager
 import com.sdk.cleanarchwithjetpackcompose.presentation.base.BaseResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,7 +17,7 @@ class LoginViewModel @Inject constructor(
     private val sharedPrefManager: SharedPrefManager
 ) : ViewModel() {
     private val _state: MutableStateFlow<LoginState> = MutableStateFlow(LoginState.Init)
-    val state: Flow<LoginState> get() = _state
+    val state: StateFlow<LoginState> get() = _state
 
     private fun hideLoading() {
         _state.value = LoginState.IsLoading(false)

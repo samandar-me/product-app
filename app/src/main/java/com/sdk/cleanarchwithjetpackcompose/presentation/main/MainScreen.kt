@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.sdk.cleanarchwithjetpackcompose.presentation.component.Screen
 import com.sdk.cleanarchwithjetpackcompose.ui.theme.Purple500
 
 @Composable
@@ -29,6 +30,7 @@ fun MainScreen(
     val scaffoldState = rememberScaffoldState()
     var expanded by remember { mutableStateOf(false) }
     val activity = (LocalContext.current as MainActivity)
+    var fabClicked by remember { mutableStateOf(false) }
     Scaffold(
         scaffoldState = scaffoldState,
         modifier = Modifier.fillMaxSize(),
@@ -68,7 +70,9 @@ fun MainScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { },
+                onClick = {
+                    fabClicked = true
+                },
                 backgroundColor = Purple500
             ) {
                 Icon(
@@ -79,6 +83,12 @@ fun MainScreen(
             }
         }
     ) {
+        if (fabClicked) {
+            LaunchedEffect(key1 = true) {
+                navController.navigate(Screen.CreateScreen.route)
+                fabClicked = false
+            }
+        }
         if (isDialogShow) {
             MaterialTheme {
                 Column {
