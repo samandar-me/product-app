@@ -38,7 +38,7 @@ fun LoginScreen(
     navController: NavController,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.collectAsState(initial = LoginState.Init).value
+    val state by viewModel.state.collectAsState(initial = LoginState.Init)
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var showPassword by remember { mutableStateOf(false) }
@@ -104,7 +104,8 @@ fun LoginScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(15.dp)
-                        .align(Alignment.CenterHorizontally),
+                        .align(Alignment.CenterHorizontally)
+                        .height(55.dp),
                 ) {
                     Text(text = stringResource(id = R.string.sign_in), color = Color.White)
                 }
@@ -124,20 +125,19 @@ fun LoginScreen(
                     textAlign = TextAlign.Center,
                     color = Purple500
                 )
-                when (state) {
-                    is LoginState.IsLoading -> {
-                        CircularProgressIndicator(
-                            modifier = Modifier.fillMaxSize(),
-                            color = Purple500
-                        )
-                    }
+                when (val result = state) {
+                    is LoginState.IsLoading -> Unit
                     is LoginState.Init -> Unit
-                    is LoginState.Error -> context.toast(state.rawRes.message)
-                    is LoginState.ShowToast -> context.toast(state.message)
+                    is LoginState.Error -> context.toast(result.rawRes.message)
+                    is LoginState.ShowToast -> context.toast(result.message)
                     is LoginState.Success -> {
                         LaunchedEffect(key1 = true) {
-                            viewModel.saveToken(state.loginEntity.token)
-                            navController.navigate(Screen.MainScreen.route)
+                            viewModel.saveToken(result.loginEntity.token)
+                            navController.navigate(Screen.MainScreen.route) {
+                                popUpTo(Screen.LoginScreen.route) {
+                                    inclusive = true
+                                }
+                            }
                         }
                     }
                 }

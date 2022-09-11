@@ -41,4 +41,7 @@ class SharedPrefManager(context: Context) {
         }
         editor.apply()
     }
+    fun clear() {
+        sharedPref.edit().clear().apply()
+    }
 }
