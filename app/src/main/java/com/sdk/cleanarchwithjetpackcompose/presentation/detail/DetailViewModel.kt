@@ -32,7 +32,6 @@ class DetailViewModel @Inject constructor(
             productUseCase.getProductByIdUseCase(id)
                 .onStart {
                     _state.value = DetailState.IsLoading
-
                 }
                 .catch {
                     _state.value = DetailState.ShowToast(it.stackTraceToString())
@@ -52,15 +51,14 @@ class DetailViewModel @Inject constructor(
             productUseCase.updateProductUseCase(productUpdateRequest, id)
                 .onStart {
                     _state.value = DetailState.IsLoading
-
                 }
                 .catch {
                     _state.value = DetailState.ShowToast(it.stackTraceToString())
                 }
                 .collect {
                     when (it) {
-                        is BaseResult.Error -> DetailState.ShowToast(it.rawResponse.message)
-                        is BaseResult.Success -> DetailState.SuccessUpdate
+                        is BaseResult.Error -> _state.value = DetailState.ShowToast(it.rawResponse.message)
+                        is BaseResult.Success -> _state.value = DetailState.SuccessUpdate
                     }
                 }
         }
@@ -71,15 +69,14 @@ class DetailViewModel @Inject constructor(
             productUseCase.deleteProductUseCase(id)
                 .onStart {
                     _state.value = DetailState.IsLoading
-
                 }
                 .catch {
                     _state.value = DetailState.ShowToast(it.stackTraceToString())
                 }
                 .collect {
                     when (it) {
-                        is BaseResult.Error -> DetailState.ShowToast(it.rawResponse.message)
-                        is BaseResult.Success -> DetailState.SuccessDelete
+                        is BaseResult.Error -> _state.value = DetailState.ShowToast(it.rawResponse.message)
+                        is BaseResult.Success -> _state.value = DetailState.SuccessDelete
                     }
                 }
         }

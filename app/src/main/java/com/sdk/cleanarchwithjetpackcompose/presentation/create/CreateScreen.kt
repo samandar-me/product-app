@@ -50,6 +50,20 @@ fun CreateScreen(
             )
         }
     ) {
+        if (state == CreateState.Loading) {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+        if (state == CreateState.Success) {
+            LaunchedEffect(key1 = Unit) {
+                navController.popBackStack()
+            }
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -91,20 +105,20 @@ fun CreateScreen(
             ) {
                 Text(text = "Create", color = Color.White)
             }
-            when (state) {
-                is CreateState.Init -> Unit
-                is CreateState.Loading -> {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        CircularProgressIndicator()
-                    }
-                }
-                is CreateState.ShowToast -> context.toast(state.message)
-                is CreateState.Success -> context.toast("Successfully created!")
-            }
         }
     }
 }
+//when (state) {
+//                is CreateState.Init -> Unit
+//                is CreateState.Loading -> {
+//                    Column(
+//                        modifier = Modifier.fillMaxSize(),
+//                        verticalArrangement = Arrangement.Center,
+//                        horizontalAlignment = Alignment.CenterHorizontally
+//                    ) {
+//                        CircularProgressIndicator()
+//                    }
+//                }
+//                is CreateState.ShowToast -> context.toast(state.message)
+//                is CreateState.Success -> context.toast("Successfully created!")
+//            }

@@ -31,8 +31,8 @@ class CreateViewModel @Inject constructor(
                 }
                 .collect {
                     when (it) {
-                        is BaseResult.Error -> CreateState.ShowToast(it.rawResponse.message)
-                        is BaseResult.Success -> CreateState.Success
+                        is BaseResult.Error -> _state.value = CreateState.ShowToast(it.rawResponse.message)
+                        is BaseResult.Success -> _state.value = CreateState.Success
                     }
                 }
         }

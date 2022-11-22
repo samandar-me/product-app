@@ -34,6 +34,9 @@ fun MainScreen(
     var expanded by remember { mutableStateOf(false) }
     val activity = (LocalContext.current as MainActivity)
     var fabClicked by remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = navController) {
+        viewModel.getAllMyProducts()
+    }
     val state = viewModel.state.collectAsState().value
     val productList by remember { viewModel.productList }
     Scaffold(

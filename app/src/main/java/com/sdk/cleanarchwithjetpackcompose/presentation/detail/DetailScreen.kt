@@ -108,7 +108,9 @@ fun DetailScreen(
             }
         }
         if (state is DetailState.SuccessDelete) {
-            navController.popBackStack()
+            LaunchedEffect(key1 = Unit) {
+                navController.popBackStack()
+            }
         }
         if (state is DetailState.SuccessUpdate) {
             context.toast("Successfully updated")
